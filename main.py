@@ -26,7 +26,7 @@ redirect_uri = 'http://127.0.0.1:8080/code'
 @app.route('/')
 def root():
     state = uuid.uuid4().hex
-    memcache.add(state, 'NA', time=60)
+    memcache.set(state, 'NA', time=60)
     redirect_value = urllib.quote(redirect_uri)
 
     url = "https://www.box.com/api/oauth2/authorize?response_type=code&client_id=%s&state=%s&redirect_uri=%s" % (client_id,  state, redirect_value)
@@ -60,8 +60,8 @@ def code():
         deadline=15
     )
     if 200 == result.status_code:
-        memcache.add(state, result.content, 3600)
-    return result.content
+        memcache.add(state, result.content, 60)
+    return redirect("oauth://%s" % (state))
 
 @app.route('/token')
 def token():
