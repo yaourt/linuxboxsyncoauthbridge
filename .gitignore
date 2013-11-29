@@ -1,3 +1,6 @@
+# Ignore file with sensitive data
+oauth.yaml
+
 *.py[cod]
 
 # C extensions
