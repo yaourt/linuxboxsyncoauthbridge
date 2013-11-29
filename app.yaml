@@ -1,0 +1,17 @@
+application: boxsyncbridge
+version: 0-1-dev
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: pycrypto
+  version: "2.6"
