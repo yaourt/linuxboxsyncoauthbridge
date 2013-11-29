@@ -60,7 +60,7 @@ def code():
         deadline=15
     )
     if 200 == result.status_code:
-        memcache.add(state, result.token, 3600)
+        memcache.add(state, result.content, 3600)
     return result.content
 
 @app.route('/token')
