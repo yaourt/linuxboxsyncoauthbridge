@@ -9,20 +9,23 @@ from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 import urllib
 import uuid
+import Crypto.Random
+import yaml
 
 # Declaring Bottle application,
 # GAE takes care of global 'app' var
 app = Bottle()
 bottle.debug(True)
 
-client_id = ''
-client_secret = ''
+config = yaml.load(open('oauth.yaml', 'rb'))
+client_id = config['client_id']
+client_secret = config['client_secret']
 redirect_uri = 'http://127.0.0.1:8080/code'
 
 
 @app.route('/')
 def root():
-    state = uuid.uuid4()
+    state = uuid.uuid4().hex
     memcache.add(state, 'NA', time=60)
     redirect_value = urllib.quote(redirect_uri)
 
