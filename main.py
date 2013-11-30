@@ -22,7 +22,14 @@ client_id = config['client_id']
 client_secret = config['client_secret']
 redirect_uri = 'http://127.0.0.1:8080/code'
 
-
+html= """
+<html>
+  <body>
+    <img src="oauth:%s" width="0" height="0"/>
+    Done !
+  </body>
+</html
+"""
 @app.route('/')
 def root():
     state = uuid.uuid4().hex
@@ -61,7 +68,8 @@ def code():
     )
     if 200 == result.status_code:
         memcache.add(state, result.content, 60)
-    return redirect("oauth://%s" % (state))
+    #return redirect("oauth:%s" % (state))
+    return html % (urllib.quote(result.content))
 
 @app.route('/token')
 def token():
