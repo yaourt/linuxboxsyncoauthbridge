@@ -1,4 +1,4 @@
-application: boxsyncbridge
+application: linuxboxsyncbridge
 version: 0-1-dev
 runtime: python27
 api_version: 1
@@ -11,9 +11,8 @@ handlers:
 
 - url: .*
   script: main.app
+  secure: always
 
 libraries:
-- name: pycrypto
-  version: "2.6"
 - name: yaml
   version: "3.10"
